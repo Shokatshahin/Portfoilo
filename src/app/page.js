@@ -1,113 +1,172 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Navbar from "./components/Navbar";
+import Typed from "typed.js";
+import Exp from "./components/exprence/exp";
+import LocomotiveScroll from "locomotive-scroll";
+import Project from "./components/projects/project";
 
 export default function Home() {
+  const navbarRef = useRef(null);
+  const imgRef = useRef(null);
+  const textRef = useRef(null);
+  const box1Ref = useRef(null);
+  const box2Ref = useRef(null);
+  const nameRef = useRef(null);
+  const scrollRef = useRef(null);
+  const proffesionRef = useRef(null)
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to(navbarRef.current, { y: "200px", duration: 2, ease: "power3.out" });
+    gsap.to(imgRef.current, { x: "50vw", duration: 2, opacity: 1 });
+    gsap.to(textRef.current, { x: "-90vw", duration: 2, opacity: 1 });
+
+    gsap.to(box1Ref.current, {
+      x: "-50vw",
+      opacity: 1,
+      duration: 2,
+      scrollTrigger: {
+        trigger: box1Ref.current,
+      },
+    });
+
+    gsap.to(box2Ref.current, {
+      x: "50vw",
+      opacity: 1,
+      duration:2,
+      scrollTrigger: {
+        trigger: box2Ref.current,
+      },
+    });
+
+    const typed = new Typed(nameRef.current, {
+      strings: ["Shokatshahin"],
+      typeSpeed: 150,
+      loop: false,
+      cursorChar: "",
+      startDelay:2000
+    });
+    const typed2 = new Typed(proffesionRef.current, {
+      strings: ["UI-UX Designer","Web-Devloper"],
+      typeSpeed: 150,
+      loop: false,
+      cursorChar: "",
+      startDelay:3000,
+    });
+    // const scroll = new LocomotiveScroll({
+    //   el: scrollRef.current,
+    //   smooth: true,
+    //   getSpeed: 10,
+    // });
+    return () => {
+      typed.destroy();
+      typed2.destroy();
+      // scroll.destroy();
+    };
+  }, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div ref={scrollRef}>
+      <main className="p-10">
+        <div ref={navbarRef}>
+          <Navbar />
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+        <div className="flex h-[80vh] items-center justify-center gap-10">
+          <img
+            ref={imgRef}
+            src="http://127.0.0.1:3000/profile-pic.jpg"
+            alt="Profile Picture"
+            className="rounded-full w-[300px] relative left-[-50%]"
+          />
+          <div className="text-center relative right-[-100%]" ref={textRef}>
+            <h1 className="text-xl text-[#55557A] m-4">Hello, I'm</h1>
+            <h1 className="text-5xl font-bold m-4" ref={nameRef}></h1>
+            <h1 className="text-2xl font-bold text-[#414155] m-4" ref={proffesionRef}>
+              
+            </h1>
+            <div className="flex gap-4 items-center justify-center m-4">
+              <button className="border border-black p-2 rounded-full w-[150px] h-[50px] text-black transition duration-300 ease-in-out hover:bg-[#353535] hover:text-white">
+                See Resume
+              </button>
+              <button className="border border-black p-2 rounded-full w-[150px] h-[50px] bg-[#353535] text-white">
+                Contact Info
+              </button>
+            </div>
+            <div className="flex gap-2 justify-center">
+              <img
+                src="http://127.0.0.1:3000/linkedin.png"
+                alt="LinkedIn"
+                className="w-8"
+              />
+              <img
+                src="http://127.0.0.1:3000/github.png"
+                alt="GitHub"
+                className="w-8"
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+      <section className="h-screen">
+        <div className="text-center">
+          <h1>Get To Know More</h1>
+          <h1 className="text-[3rem] font-bold">About Me</h1>
+        </div>
+        <div className="overflow-hidden">
+          <div className="flex h-[100%] justify-center gap-10 m-40">
+            <div
+              ref={box1Ref}
+              className="box border border-black w-[500px] flex items-center justify-center flex-col relative right-[-100%] opacity-0"
+            >
+              <img
+                src="http://127.0.0.1:3000/experience.png"
+                alt=""
+                className="w-10 "
+              />
+              <h1>Educational Experience</h1>
+              <h1>2+ years</h1>
+              <h1>Frontend/Backend Development</h1>
+            </div>
+            <div
+              ref={box2Ref}
+              className="box border border-black w-[500px] flex items-center justify-center flex-col relative left-[-100%] opacity-0"
+            >
+              <img
+                src="http://127.0.0.1:3000/education.png"
+                alt=""
+                className="w-10 "
+              />
+              <h1>Education</h1>
+              <h1>Bachelor of Computer Application</h1>
+            </div>
+          </div>
+          <p className="mx-auto w-[60%] para">
+            I'm <b>Software Developer</b> from Bangladesh, I build apps with a
+            focus on <b>JavaScript React & Redux</b> considering all the aspects
+            of <b>UI/UX</b> . I enjoy turning complex problems into simple,
+            beautiful and intuitive designs. <br /> A <b>Software Engineer</b> ,
+            who loves to solve problems. I am having an experience of building
+            high-performing, responsive, beautiful web applications to deliver a
+            unique, intuitive user experience that works, also{" "}
+            <b>keen interest in UI/UX</b> with some nice designing skills. I am
+            a well-trained teammate who loves to share ideas and prioritizes
+            communication in order to achieve goals within the set deadlines. I
+            enjoy being challenged and working on projects that require me to
+            step outside of my comfort zone.
+            <br />
           </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        </div>
+      </section>
+      <section>
+        <Exp />
+      </section>
+      <section>
+        <Project/>
+      </section>
+    </div>
   );
 }
